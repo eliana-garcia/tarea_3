@@ -18,21 +18,16 @@ Este sistema ha sido desarrollado en lenguaje C y puede ejecutarse fácilmente u
 
 ### Pasos para compilar y ejecutar:
 
-1. **Descarga y descomprime el** archivo `.zip` en una carpeta de tu elección.
-2. **Abre el proyecto en Visual Studio Code**
-    - Inicia Visual Studio Code.
-    - Selecciona `Archivo > Abrir carpeta...` y elige la carpeta donde descomprimiste el proyecto.
-3. **Compila el código**
-    - Abre el archivo principal (`tarea2.c`).
-    - Abre la terminal integrada (`Terminal > Nueva terminal`).
-    - En la terminal, compila el programa con el siguiente comando:
-```
-gcc tdas/*.c tarea2.c -Wno-unused-result -o tarea2
-```
-- Para ejecutar el programa, use:
+1. Abre **Visual Studio Code**
+2. 
 
+- En la terminal, copila el programa en el siguiente comando:
 ```
-./tarea2
+gcc tdas/*.c tarea3.c -Wno-unused-result -o GraphQuest
+```
+- Para ejecutar el programa, use;
+```
+./GraphQuest
 ```
 
 ## Funcionalidades disponibles
@@ -41,3 +36,8 @@ gcc tdas/*.c tarea2.c -Wno-unused-result -o tarea2
 
 *Todas las funciones funcionan correctamente*
 
+/*
+git add . 
+git commit -m "Añadidos archivos del proyecto GraphQuest" 
+git push origin main
+*/
