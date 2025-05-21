@@ -158,6 +158,7 @@ void recogerItems(List* escenarios, Jugador* jugador) {
 
     if (!escenarioActual || list_size(escenarioActual->items) == 0) {
         printf("No hay ítems para recoger\n");
+        presioneTeclaParaContinuar();
         return;
     }
 
@@ -187,6 +188,115 @@ void recogerItems(List* escenarios, Jugador* jugador) {
         jugador->tiempo--;
     }
 }
+
+void descartarItems(Jugador* jugador) {
+    if (list_size(jugador->inventario) == 0) {
+        printf("No tienes ítems para descartar.\n");
+        presioneTeclaParaContinuar();
+        return;
+    }
+
+    printf("Seleccione el ítem a descartar (0 para cancelar):\n");
+    int i = 1;
+    void* itemData = list_first(jugador->inventario);
+    while (itemData != NULL) {
+        Item* item = (Item*)itemData;
+        printf("%d. %s (Peso: %d, Valor: %d)\n", i++, item->nombre, item->peso, item->valor);
+        itemData = list_next(jugador->inventario);
+    }
+
+    int opcion;
+    scanf("%d", &opcion);
+    if (opcion == 0) return;
+
+    if (opcion > 0 && opcion <= list_size(jugador->inventario)) {
+        itemData = list_first(jugador->inventario);
+        for (i = 1; i < opcion; i++) {
+            itemData = list_next(jugador->inventario);
+        }
+
+        Item* item = (Item*)itemData;
+        jugador->pesoTotal -= item->peso;
+        jugador->puntajeTotal -= item->valor;
+        list_popCurrent(jugador->inventario);  // Elimina el ítem
+        jugador->tiempo--; // Restar tiempo
+    }
+}
+
+void avanzar(Jugador* jugador, List* escenarios) {
+    Escenario* actual = NULL;
+    void* data = list_first(escenarios);
+    int i = 0;
+    while (data != NULL) {
+        if (i == jugador->escenarioActual) {
+            actual = (Escenario*)data;
+            break;
+        }
+        data = list_next(escenarios);
+        i++;
+    }
+
+    if (!actual) return;
+
+    printf("Seleccione la dirección:\n");
+    if (actual->arriba != -1) printf("1. Arriba\n");
+    if (actual->abajo != -1) printf("2. Abajo\n");
+    if (actual->izquierda != -1) printf("3. Izquierda\n");
+    if (actual->derecha != -1) printf("4. Derecha\n");
+    printf("0. Cancelar\n");
+
+    int opcion;
+    scanf("%d", &opcion);
+
+    int nuevoEscenario = -1;
+    if (opcion == 1 && actual->arriba != -1) nuevoEscenario = actual->arriba;
+    else if (opcion == 2 && actual->abajo != -1) nuevoEscenario = actual->abajo;
+    else if (opcion == 3 && actual->izquierda != -1) nuevoEscenario = actual->izquierda;
+    else if (opcion == 4 && actual->derecha != -1) nuevoEscenario = actual->derecha;
+    else if (opcion == 0) return;
+    else {
+        printf("Dirección inválida.\n");
+        presioneTeclaParaContinuar();
+        return;
+    }
+
+    jugador->escenarioActual = nuevoEscenario;
+
+    // Cálculo del tiempo gastado
+    int tiempoGastado = (jugador->pesoTotal + 1 + 9) / 10; // ceil(peso + 1 / 10)
+    jugador->tiempo -= tiempoGastado;
+
+    // Verificar si es escenario final
+    Escenario* nuevo = NULL;
+    i = 0;
+    data = list_first(escenarios);
+    while (data != NULL) {
+        if (i == jugador->escenarioActual) {
+            nuevo = (Escenario*)data;
+            break;
+        }
+        data = list_next(escenarios);
+        i++;
+    }
+
+    if (nuevo && nuevo->esFinal) {
+        printf("\n¡Has llegado al escenario final!\n");
+        printf("Puntaje final: %d\n", jugador->puntajeTotal);
+        printf("Ítems en el inventario:\n");
+
+        void* itemData = list_first(jugador->inventario);
+        while (itemData != NULL) {
+            Item* item = (Item*)itemData;
+            printf("- %s (Peso: %d, Valor: %d)\n", item->nombre, item->peso, item->valor);
+            itemData = list_next(jugador->inventario);
+        }
+
+        presioneTeclaParaContinuar();
+        exit(0);
+    }
+}
+
+
 
 // Función principal del juego
 void jugar(List* escenarios) {
@@ -218,17 +328,17 @@ void jugar(List* escenarios) {
                 recogerItems(escenarios, &jugador);
                 break;
             case 2:
-                // Implementar descarte de ítems
+                descartarItems(&jugador);
                 break;
             case 3:
-                // Implementar movimiento
+                avanzar(&jugador, escenarios);
                 break;
             case 4:
-                // Reiniciar juego
                 jugador.pesoTotal = 0;
                 jugador.puntajeTotal = 0;
                 jugador.tiempo = 20;
                 jugador.escenarioActual = 0;
+                list_clean(jugador.inventario);
                 break;
             case 5:
                 return;
