@@ -19,7 +19,8 @@ Este sistema ha sido desarrollado en lenguaje C y puede ejecutarse fácilmente u
 ### Pasos para compilar y ejecutar:
 
 1. Abre **Visual Studio Code**
-2. 
+2. Abre la terminal integrada (Terminal > Nueva Terminal)
+3. en la terminal abre **Git Bash**
 
 - En la terminal, copila el programa en el siguiente comando:
 ```
@@ -30,11 +31,39 @@ gcc tdas/*.c tarea3.c -Wno-unused-result -o GraphQuest
 ./GraphQuest
 ```
 
-## Funcionalidades disponibles
+## Funcionalidades 
 
-- **
+- Cargar laberinto desde un archivo CSV
+- Iniciar partida desde la entrada principal
+- Moverse entre escenarios y consumir tiempo según el peso del inventario
+- Recoger ítems en los escenarios y agregarlos al inventario
+- Descartar ítems para reducir peso
+- Avanzar en una Dirección
+- Finalizar el juego al llegar a la salida o cuando se acaba el tiempo
 
-*Todas las funciones funcionan correctamente*
+**se podria mejorar como se muestra el juego, como los menus, el recoger items, mas que nada la presentacion**
+
+## Ejemplo de uso 
+
+1. Cargar el laberinto 
+    - El jugador empieza cargando el laberinto desde un archivo CSV.
+
+2. Inicia la partida
+    - Te muestra la opcion inicial siendo el tiempo disponible y los movimientos que puedes ejecutar.
+
+3. Recoger items
+    - Si en el esenario hay items disponibles, puedes recogerlos, estos te daran peso y valor.
+
+4. Descartar items 
+    - En cualquier momento puedes descartar los items que has ido recoguiendo a lo largo del camino, te descontara el peso que cargas y valor.
+
+5. Avanzar 
+    - En esta opcion tienes que elegir que direcion disponible quieres seguir, para continuar el laberinto.
+
+6. Reinicir partida
+    - La partida se reiniciara y se eliminara todo el proceso que tiene.
+
+
 
 /*
 git add . 
