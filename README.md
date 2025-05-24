@@ -41,7 +41,7 @@ gcc tdas/*.c tarea3.c -Wno-unused-result -o GraphQuest
 - Avanzar en una Dirección
 - Finalizar el juego al llegar a la salida o cuando se acaba el tiempo
 
-**se podria mejorar como se muestra el juego, como los menus, el recoger items, mas que nada la presentacion**
+**se podria mejorar como se muestra el juego, como los menus, el recoger items, mas que nada la presentacion, tambien un error que encontre es que si terminas el juego o lo ganas y vuelves no se libera bien la memoria y te devuelve los resultados anteriores por lo que para que funcione deverias de volver a salir y ejecutar el programa de nuevo**
 
 ## Ejemplo de uso 
 
@@ -64,9 +64,3 @@ gcc tdas/*.c tarea3.c -Wno-unused-result -o GraphQuest
     - La partida se reiniciara y se eliminara todo el proceso que tiene.
 
 
-
-/*
-git add . 
-git commit -m "Añadidos archivos del proyecto GraphQuest" 
-git push origin main
-*/

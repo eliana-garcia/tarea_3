@@ -19,7 +19,6 @@ typedef struct {
     Map* vertices; // Mapa de id -> Vertice*
 } Grafo;
 
-// Funciones del TDA Grafo
 int is_equal_string(void *key1, void *key2);
 Grafo* crearGrafo();
 void agregarVertice(Grafo* grafo, const char* id, const char* nombre);
